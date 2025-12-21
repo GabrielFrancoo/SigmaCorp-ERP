@@ -7,6 +7,7 @@ public class ApontamentoHoras extends JFrame{
         setTitle("Apontamento de Horas - SigmaCorp");
         setSize(800, 500);
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }    

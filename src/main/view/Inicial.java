@@ -37,13 +37,13 @@ add(backgroundLabel);
     ApontamentoProd.setSize(ApontamentoProd.getPreferredSize());
     ApontamentoProd.setBounds(0,215,160, ApontamentoProd.getPreferredSize().height);
 
-    ApontamentoProd.setBorder(BorderFactory.createLineBorder(Color.RED));
+    ApontamentoProd.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
     ApontamentoProd.addMouseListener(new MouseAdapter(){
         @Override
         public void mouseClicked(MouseEvent e) {
             new ApontProducao().setVisible(true);
-            dispose();
+
         }
     });
     add(ApontamentoProd);
@@ -56,23 +56,35 @@ add(backgroundLabel);
     ApontametoHr.setSize(ApontametoHr.getPreferredSize());
     ApontametoHr.setBounds(0,242,160, ApontametoHr.getPreferredSize().height);
 
-    ApontametoHr.setBorder(BorderFactory.createLineBorder(Color.RED));
+    ApontametoHr.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
     ApontametoHr.addMouseListener(new MouseAdapter(){
     @Override
         public void mouseClicked(MouseEvent e) {
             // Ação ao clicar em Apontamento de Horas
             new ApontamentoHoras().setVisible(true);
-            dispose();
         }
     });
 
     add(ApontametoHr);
 
     JLabel CadastroProduto = new JLabel("Cadastro_Produto");
-    CadastroProduto.setBounds(0,225,180,100);
     CadastroProduto.setFont(new Font("Times New Roman", Font.BOLD, 18));
     CadastroProduto.setForeground(new Color(30, 144, 255));
+    CadastroProduto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    CadastroProduto.setSize(CadastroProduto.getPreferredSize());
+    CadastroProduto.setBounds(0,267,160, CadastroProduto.getPreferredSize().height);
+
+    CadastroProduto.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+    CadastroProduto.addMouseListener(new MouseAdapter(){
+    @Override
+        public void mouseClicked(MouseEvent e) {
+            // Ação ao clicar em Cadastro de Produto
+            new CadastraProduto().setVisible(true);
+        }
+    }); 
     add(CadastroProduto);
 
     JLabel EstruturaProd = new JLabel("Estrutura_Produto");
@@ -87,11 +99,11 @@ add(backgroundLabel);
     Kardex.setForeground(new Color(30, 144, 255));
     add(Kardex);
 
-    JLabel Relatorios = new JLabel("Relatorios");
-    Relatorios.setBounds(0,300,100,100);
-    Relatorios.setFont(new Font("Times New Roman", Font.BOLD, 18));
-    Relatorios.setForeground(new Color(30, 144, 255));
-    add(Relatorios);
+    JLabel Produto = new JLabel("Produto");
+    Produto.setBounds(0,300,100,100);
+    Produto.setFont(new Font("Times New Roman", Font.BOLD, 18));
+    Produto.setForeground(new Color(30, 144, 255));
+    add(Produto);
 
     JLabel Faturamento = new JLabel("Faturamento");
     Faturamento.setBounds(0,325,150,100);
