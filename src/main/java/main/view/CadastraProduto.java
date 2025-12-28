@@ -1,12 +1,5 @@
 package main.view;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
@@ -14,8 +7,33 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import main.controller.CadastraProdutoDAO;
 
 public class CadastraProduto extends JFrame{
+
+        private JTextField tfProduto;
+        private JTextField tfDescricao;
+        private JTextField tfNomeCientifico;
+        private JTextField tfArmazem;
+        private JTextField tfCustoUnitario;
+        private JTextField tfTIpo;
+
+        private int id;
+        private String produto;
+        private String descricao;
+        private String nomeCientifico;
+        private String armazem;
+        private double CustoUnitario;
+        private String tipo;
+   
+
         public CadastraProduto(){
         setTitle("Cadastro de Produtos - SigmaCorp");
         setSize(700, 250);
@@ -23,7 +41,7 @@ public class CadastraProduto extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
+        
  setLayout(new GridBagLayout());
 
 // ================= PRODUTO =================
@@ -44,7 +62,8 @@ produto.gridy = 0;
 produto.fill = GridBagConstraints.NONE;
 produto.weightx = 1.0;
 produto.weighty = 0;
-add(new JTextField(20), produto);
+tfProduto  = new JTextField(20);
+add(tfProduto,produto);
 
 // ================= DESCRIÇÃO =================
 GridBagConstraints descricao = new GridBagConstraints();
@@ -56,7 +75,7 @@ descricao.gridx = 0;
 descricao.gridy = 1;
 descricao.weightx = 0;
 descricao.weighty = 0;
-add(new JLabel("Descricao:"), descricao);
+add(new JLabel("Descrição:"), descricao);
 
 // Campo
 descricao.gridx = 1;
@@ -64,7 +83,8 @@ descricao.gridy = 1;
 descricao.fill = GridBagConstraints.NONE;
 descricao.weightx = 1.0;
 descricao.weighty = 0;
-add(new JTextField(20), descricao);
+tfDescricao = new JTextField(20);
+add(tfDescricao,descricao);
 
 // ================= NOME CIENTÍFICO =================
 GridBagConstraints nomeCientifico = new GridBagConstraints();
@@ -84,8 +104,8 @@ nomeCientifico.gridy = 2;
 nomeCientifico.fill = GridBagConstraints.NONE;
 nomeCientifico.weightx = 0;
 nomeCientifico.weighty = 0;
-add(new JTextField(20), nomeCientifico);
-
+tfNomeCientifico = new JTextField(20);
+add(tfNomeCientifico,nomeCientifico);
 //ARMAZÉM
 GridBagConstraints armazem = new GridBagConstraints();
 armazem.insets = new Insets(5, 10, 5, 10);
@@ -100,24 +120,25 @@ add(new JLabel("Armazém:"), armazem);
 armazem.gridx = 3;
 armazem.gridy = 0;
 armazem.fill = GridBagConstraints.NONE;
-add(new JTextField(15), armazem);
-
+tfArmazem = new JTextField(20);
+add(tfArmazem,armazem);
 
 //custo unitario
-GridBagConstraints custoUnitario = new GridBagConstraints();
-custoUnitario.insets = new Insets(5, 10, 5, 10);
-custoUnitario.anchor = GridBagConstraints.WEST;
+GridBagConstraints CustoUnitario = new GridBagConstraints();
+CustoUnitario.insets = new Insets(5, 10, 5, 10);
+CustoUnitario.anchor = GridBagConstraints.WEST;
 
 // Label
-custoUnitario.gridx = 2;
-custoUnitario.gridy = 1;
-add(new JLabel("Custo Unitário:"), custoUnitario);
+CustoUnitario.gridx = 2;
+CustoUnitario.gridy = 1;
+add(new JLabel("Custo Unitário:"), CustoUnitario);
 
 // Campo
-custoUnitario.gridx = 3;
-custoUnitario.gridy = 1;
-custoUnitario.fill = GridBagConstraints.NONE;
-add(new JTextField(15), custoUnitario);
+CustoUnitario.gridx = 3;
+CustoUnitario.gridy = 1;
+CustoUnitario.fill = GridBagConstraints.NONE;
+tfCustoUnitario = new JTextField(20);
+add(tfCustoUnitario,CustoUnitario);
 
 //tipo
 GridBagConstraints tipo = new GridBagConstraints();
@@ -133,7 +154,8 @@ add(new JLabel("Tipo:"), tipo);
 tipo.gridx = 3;
 tipo.gridy = 2;
 tipo.fill = GridBagConstraints.NONE;
-add(new JTextField(15), tipo);
+tfTIpo = new JTextField(20);
+add(tfTIpo,tipo);
 
 //BOTÃO CADASTRAR
 GridBagConstraints botaoCadastrar = new GridBagConstraints();
@@ -171,10 +193,32 @@ add(painelBotoes, painelBotoesConstraints);
 
 JButton cadastrar = new JButton("Cadastrar");
 painelBotoes.add(cadastrar);
-cadastrar.addActionListener(e->{
-    // Lógica para cadastrar o produto
-    // Aqui você pode adicionar a lógica para salvar os dados do produto
+cadastrar.addActionListener(e -> {
+    try {
+        String Nproduto = tfProduto.getText();
+        String Ndescricao = tfDescricao.getText();
+        String NnomeCientifico = tfNomeCientifico.getText();
+        String Narmazem = tfArmazem.getText();
+        double Ncusto = Double.parseDouble(tfCustoUnitario.getText());
+        String Ntipo = tfTIpo.getText();
+
+        CadastraProdutoDAO dao = new CadastraProdutoDAO();
+        dao.salvar(Nproduto, Ndescricao, NnomeCientifico, Narmazem,Ncusto, Ntipo);
+
+        JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
+
+    } catch (Exception ex) {
+        ex.printStackTrace();
+
+        JOptionPane.showMessageDialog(
+            this,
+            ex.getMessage(),
+            "ERRO",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
 });
+
 cadastrar.setBackground(new Color(177, 254, 126));
 cadastrar.setContentAreaFilled(false);
 cadastrar.setOpaque(true);
@@ -218,6 +262,29 @@ empurrador.weighty = 1.0;
 add(new JLabel(), empurrador);
 
 setVisible(true);
-
     }
+
+        public void setProduto(String produto) {
+            this.produto = produto;
+        }
+
+        public CadastraProduto(String produto, String descricao, String nomeCientifico, String armazem, double CustoUnitario, String tipo){
+        this.produto = produto;
+        this.descricao = descricao;
+        this.nomeCientifico = nomeCientifico;
+        this.armazem = armazem;
+        this.CustoUnitario = CustoUnitario;
+        this.tipo = tipo;
+        }
+        
+        public int getId() {return id;}
+        public void setId(int id) {this.id = id;}
+        
+        public String getProduto() {return produto;}
+        public String getDescricao() {return descricao;}
+        public String getNomeCientifico() {return nomeCientifico;}
+        public String getArmazem() {return armazem;}
+        public double getCustoUnitario() {return CustoUnitario;}
+        public String getTipo() {return tipo;}
+
 }   

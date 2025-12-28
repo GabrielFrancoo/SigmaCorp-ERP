@@ -20,7 +20,7 @@ public class Inicial  extends JFrame{
     setSize(800, 500);
     setResizable(false);
 
-ImageIcon img = new ImageIcon("src/main/assets/SigmaCorp.png");
+ImageIcon img = new ImageIcon("src/main/java/main/assets/SigmaCorp.png");
 
 // diminui o tamanho (ex: 150 x 200)
 Image smaller = img.getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH);

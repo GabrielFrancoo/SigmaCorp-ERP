@@ -1,5 +1,6 @@
 package main.view;
 import javax.swing.*;
+
 import main.model.LoginAcess;
 
 public class Logon extends JFrame{
@@ -27,7 +28,7 @@ public class Logon extends JFrame{
         Password.setBounds(70, 120, 250, 25);
         frame.add(Password);
 
-        JButton button = new JButton("Enter");
+        JButton button = new JButton("Enter"); 
         button.setBounds(150, 170, 100, 25);
         frame.add(button);
 

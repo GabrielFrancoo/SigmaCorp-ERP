@@ -1,9 +1,8 @@
 package main.model;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import main.view.Inicial;
-
-import javax.swing.JOptionPane;
 
 public class LoginAcess {
     private JTextField loginUser;
