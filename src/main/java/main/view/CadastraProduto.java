@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,7 +17,9 @@ import javax.swing.JTextField;
 
 import main.controller.CadastraProdutoDAO;
 
+
 public class CadastraProduto extends JFrame{
+
 
         private JTextField tfProduto;
         private JTextField tfDescricao;
@@ -247,8 +250,8 @@ painelBotoes.add(Voltar);
 Voltar.addActionListener(e -> {
     Inicial telaInicial = new Inicial();
     dispose();
+    Voltar.setBackground(new Color(112,176,225));
 });
-Voltar.setBackground(new Color(112,176,225));
 Voltar.setContentAreaFilled(false);
 Voltar.setOpaque(true);
 Voltar.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -286,5 +289,7 @@ setVisible(true);
         public String getArmazem() {return armazem;}
         public double getCustoUnitario() {return CustoUnitario;}
         public String getTipo() {return tipo;}
+}
 
-}   
+
+

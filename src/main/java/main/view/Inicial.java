@@ -99,10 +99,24 @@ add(backgroundLabel);
     Kardex.setForeground(new Color(30, 144, 255));
     add(Kardex);
 
+    //Produto
     JLabel Produto = new JLabel("Produto");
-    Produto.setBounds(0,300,100,100);
     Produto.setFont(new Font("Times New Roman", Font.BOLD, 18));
     Produto.setForeground(new Color(30, 144, 255));
+    Produto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    Produto.setSize(Produto.getPreferredSize());
+    Produto.setBounds(0,340,160, Produto.getPreferredSize().height);
+
+    Produto.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+    Produto.addMouseListener(new MouseAdapter(){
+        @Override
+            public void mouseClicked(MouseEvent e) {
+                // Ação ao clicar em Produto
+                new ProdutoView().setVisible(true);
+            }
+    });
     add(Produto);
 
     JLabel Faturamento = new JLabel("Faturamento");

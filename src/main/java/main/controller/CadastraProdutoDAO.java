@@ -2,9 +2,12 @@ package main.controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 import main.model.Conexao;
+import main.model.Produto;
 
 public class CadastraProdutoDAO {
 
@@ -37,4 +40,30 @@ public class CadastraProdutoDAO {
             throw new RuntimeException(e.getMessage());
         }
     }
+        public List<Produto> listar(){
+        List<Produto> lista = new ArrayList<>();
+
+        String sql =  "SELECT * FROM CadastraProduto";
+        
+        try(Connection conn = Conexao.conectar();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()){
+            
+            while (rs.next()) {
+                Produto p = new Produto();
+                p.setId(rs.getInt("id"));
+                p.setProduto(rs.getString("produto"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setNomeCientifico(rs.getString("nomeCIentifico"));
+                p.setArmazem(rs.getString("armazem"));
+                p.setCustoUnitario(rs.getDouble("custoUnitario"));
+                p.setTipo(rs.getString("tipo"));
+
+                lista.add(p);
+            }
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return lista;
+        }
 }
