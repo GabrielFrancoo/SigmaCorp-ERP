@@ -1,7 +1,15 @@
 package main.view;
 
+import java.awt.BorderLayout;
 import java.util.List;
-import javax.swing.*;
+import java.util.Objects;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import main.controller.CadastraProdutoDAO;
@@ -25,7 +33,13 @@ public class ProdutoView extends JFrame {
     }
 
     private void criarTabela() {
-        modelo = new DefaultTableModel();
+        modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int linha, int coluna) {
+                return false;
+            }
+        };
+
         modelo.addColumn("ID");
         modelo.addColumn("Produto");
         modelo.addColumn("Descrição");
@@ -35,9 +49,95 @@ public class ProdutoView extends JFrame {
         modelo.addColumn("Tipo");
 
         tabela = new JTable(modelo);
-        JScrollPane scroll = new JScrollPane(tabela);
+        add(new JScrollPane(tabela), BorderLayout.CENTER);
 
-        add(scroll);
+        JButton botaoEditar = new JButton("Editar");
+        botaoEditar.addActionListener(evento -> editarProduto());
+
+        JButton botaoExcluir = new JButton("Excluir");
+        botaoExcluir.addActionListener(evento -> excluirProduto());
+
+        JButton botaoVoltar = new JButton("Voltar");
+        botaoVoltar.addActionListener(evento -> dispose());
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoEditar);
+        painelBotoes.add(botaoExcluir);
+        painelBotoes.add(botaoVoltar);
+        add(painelBotoes, BorderLayout.SOUTH);
+    }
+
+    private void editarProduto() {
+        int linhaSelecionada = tabela.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto para editar.");
+            return;
+        }
+
+        int linhaModelo = tabela.convertRowIndexToModel(linhaSelecionada);
+        int idProduto = (Integer) modelo.getValueAt(linhaModelo, 0);
+
+        CadastraProduto formulario =
+            new CadastraProduto(idProduto, this::carregarProdutos);
+
+        formulario.preencherCampos(
+            Objects.toString(modelo.getValueAt(linhaModelo, 1), ""),
+            Objects.toString(modelo.getValueAt(linhaModelo, 2), ""),
+            Objects.toString(modelo.getValueAt(linhaModelo, 3), ""),
+            Objects.toString(modelo.getValueAt(linhaModelo, 4), ""),
+            Objects.toString(modelo.getValueAt(linhaModelo, 5), ""),
+            Objects.toString(modelo.getValueAt(linhaModelo, 6), "")
+        );
+    }
+
+    private void excluirProduto() {
+        int linhaSelecionada = tabela.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto para excluir.");
+            return;
+        }
+
+        int linhaModelo = tabela.convertRowIndexToModel(linhaSelecionada);
+        int idProduto = (Integer) modelo.getValueAt(linhaModelo, 0);
+        String nomeProduto = Objects.toString(modelo.getValueAt(linhaModelo, 1), "");
+
+        int resposta = JOptionPane.showConfirmDialog(
+            this,
+            "Excluir definitivamente o produto " + nomeProduto + " (ID " + idProduto + ")?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (resposta != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        boolean excluido;
+        try {
+            excluido = new CadastraProdutoDAO().excluir(idProduto);
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                "Erro ao excluir produto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String mensagem = excluido
+            ? "Produto excluído com sucesso!"
+            : "O produto já não existe no banco de dados.";
+
+        try {
+            carregarProdutos();
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                mensagem + "\nReabra a listagem para atualizar a tabela.",
+                "Erro ao recarregar a lista", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, mensagem);
     }
 
     private void carregarProdutos() {

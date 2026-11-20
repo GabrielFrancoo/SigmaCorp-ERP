@@ -88,25 +88,25 @@ add(backgroundLabel);
     add(CadastroProduto);
 
     JLabel EstruturaProd = new JLabel("Estrutura_Produto");
-    EstruturaProd.setBounds(0,250,180,100);
+    EstruturaProd.setBounds(0,290,180,24); 
     EstruturaProd.setFont(new Font("Times New Roman", Font.BOLD, 18));
     EstruturaProd.setForeground(new Color(30, 144, 255));
     add(EstruturaProd);
 
     JLabel Kardex = new JLabel("Kardex");
-    Kardex.setBounds(0,275,150,100);
+    Kardex.setBounds(0,315,160,24);
     Kardex.setFont(new Font("Times New Roman", Font.BOLD, 18));
     Kardex.setForeground(new Color(30, 144, 255));
     add(Kardex);
 
     //Produto
     JLabel Produto = new JLabel("Produto");
+    Produto.setBounds(0,340,160,24);
     Produto.setFont(new Font("Times New Roman", Font.BOLD, 18));
     Produto.setForeground(new Color(30, 144, 255));
     Produto.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     Produto.setSize(Produto.getPreferredSize());
-    Produto.setBounds(0,340,160, Produto.getPreferredSize().height);
 
     Produto.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -120,20 +120,20 @@ add(backgroundLabel);
     add(Produto);
 
     JLabel Faturamento = new JLabel("Faturamento");
-    Faturamento.setBounds(0,325,150,100);
+    Faturamento.setBounds(0,365,160,24);
     Faturamento.setFont(new Font("Times New Roman", Font.BOLD, 18));
     Faturamento.setForeground(new Color(30, 144, 255));
     add(Faturamento);
 
     JLabel Configuracoes = new JLabel("Configuracoes");
-    Configuracoes.setBounds(0,350,150,100);
+    Configuracoes.setBounds(0,390,160,24);
     Configuracoes.setFont(new Font("Times New Roman", Font.BOLD, 18));
     Configuracoes.setForeground(new Color(30, 144, 255));
     add(Configuracoes); 
 
 
     JLabel Informacoes = new JLabel("Informacoes");
-    Informacoes.setBounds(0,375,150,100);
+    Informacoes.setBounds(0,415,160,24);
     Informacoes.setFont(new Font("Times New Roman", Font.BOLD, 18));
     Informacoes.setForeground(new Color(30, 144, 255));
     add(Informacoes);
