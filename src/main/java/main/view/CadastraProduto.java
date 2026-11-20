@@ -39,8 +39,6 @@ public class CadastraProduto extends JFrame{
 
         public CadastraProduto(){
         setTitle("Cadastro de Produtos - SigmaCorp");
-        setSize(700, 250);
-        setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -264,6 +262,8 @@ empurrador.weightx = 0;
 empurrador.weighty = 1.0;
 add(new JLabel(), empurrador);
 
+pack();
+setLocationRelativeTo(null);
 setVisible(true);
     }
 
